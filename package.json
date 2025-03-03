@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/barlow": "^5.2.5",
+    "@fontsource/michroma": "^5.2.5",
     "@microsoft/signalr": "^8.0.7",
     "@shadcn/ui": "^0.0.4",
     "@tailwindcss/vite": "^4.0.8",
