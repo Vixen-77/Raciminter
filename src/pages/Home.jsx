@@ -4,7 +4,7 @@ import "@fontsource/barlow/100.css"; // Ultra Thin (100)
 
 const Home = () => {
   return (
-    <div className="">
+    <div className="w-full h-screen flex flex-col items-center justify-center bg-black-900 text-white">
       
       {/* Premier titre */}
       <h1 className="text-5xl font-bold mb-4 animate-fade-in" 
