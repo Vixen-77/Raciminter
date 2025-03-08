@@ -10,7 +10,7 @@ const Dashboard = () => {
         {menus.map((menu, index) => (
           <button key={index} className="bg-gray-700 p-2 rounded hover:bg-gray-600 transition">
             {menu}
-          </button>
+          </button> 
         ))}
       </aside>
       
