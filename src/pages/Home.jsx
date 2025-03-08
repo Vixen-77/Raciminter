@@ -20,6 +20,9 @@ const Home = () => {
         setLoading(false);
       });
   }, []);
+
+
+
    
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center bg-black-900 text-white">
