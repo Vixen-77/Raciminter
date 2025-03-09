@@ -20,6 +20,11 @@ const RootLayout = () => {
                     Contact
                 </div>
             </NavLink> 
+            <NavLink to={"/Loading"}>
+                <div>
+                    Loading
+                </div>
+            </NavLink> 
       </div> 
       <div>
         <Outlet/>
