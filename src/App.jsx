@@ -4,55 +4,49 @@ import {
   Route,
   createRoutesFromElements,
 } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 import "./App.css";
+import React from "react";
 import RootLayout from "./components/layouts/RootLayout";
 import Home from "./pages/Home";
-import React from "react";
-import About from "./pages/About";
-import Contact from "./pages/Contact";// Import manquant
-import LoadingAnimation from "./pages/Loading";
-import SmartSwatch from "./pages/SmartSwatch";
-import Smartphone from "./pages/Smartphone";
-import CGM from "./pages/CGM";
-import Car from "./pages/Car"; 
-import Map from "./pages/InteractiveMAP"; // Import manquant
-import Closefriends from "./pages/CloseFriends";
-import Notification from "./pages/Notification";
-import Patient from "./pages/Patient" ;
-import ProS from "./pages/ProS" ;
-import RespoHop from "./pages/RespoHop" ;
-
-
-
-// Import manquant
-
-
+import PatientSignup from "./pages/Patientsignup";
+import ProSignup from "./pages/ProSignup";
+import RespSignup from "./pages/RespSignup";
+import LoginSig from "./pages/LoginSig";
+import PatientSignin from "./pages/PatientSignin";
+import ProSignin from "./pages/ProSignin";
+import RespSignin from "./pages/RespSignin";
+import Patient from "./pages/Patient";
+import Help from "./pages/help";
+import ProS from "./pages/ProS";
+import AccountSettings from "./pages/AccountSettings";
+import { DarkModeProvider } from "./components/layouts/DarkModeContext";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
-        <Route path="contact" element={<Contact />} />
-        <Route path="loading" element={<LoadingAnimation />} />
-        <Route path="smartswatch" element={<SmartSwatch />} />
-        <Route path="smartphone" element={<Smartphone />} />
-        <Route path="cgm" element={<CGM />} />
-        <Route path="car" element={<Car />} />
-        <Route path="map" element={<Map />} />
-        <Route path="closefriends" element={<Closefriends />} />
-        <Route path="notification" element={<Notification />} />
-        <Route path="patient" element={<Patient />} />
-        <Route path="pros" element={<ProS />} />
-        <Route path="respoHop" element={<RespoHop />} />
+        <Route path="LoginSig" element={<LoginSig />} />
+        <Route path="PatientSignup" element={<PatientSignup />} />
+        <Route path="ProSignup" element={<ProSignup />} />
+        <Route path="RespSignup" element={<RespSignup />} />
+        <Route path="PatientSignin" element={<PatientSignin />} />
+        <Route path="ProSignin" element={<ProSignin />} />
+        <Route path="RespSignin" element={<RespSignin />} />
+        <Route path="Patient" element={<Patient />} />
+        <Route path="Help" element={<Help />} />
+        <Route path="AccountSettings" element={<AccountSettings />} />
+        <Route path="ProS" element={<ProS />} />
       </Route>
-
     )
   );
 
-  return <RouterProvider router={router} />;
+  return (
+    <DarkModeProvider>
+      <RouterProvider router={router} />
+    </DarkModeProvider>
+  );
 }
 
 export default App;

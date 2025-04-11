@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -34,7 +35,7 @@ body {
 h1 {
   font-size: 2.8rem;
   font-weight: bold;
-  color: #27ae60;
+  color: #F05050;
   text-align: center;
   text-transform: uppercase;
 }
