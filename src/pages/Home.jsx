@@ -43,7 +43,7 @@ const Home = ({ isDarkMode }) => {
           </div>
 
           {/* Titre principal */}
-          <h1 className="text-5xl font-bold mb-10 tracking-wider">JOIN E-MERGENCY NOW !</h1>
+          <h1 className="text-5xl font-bold mb-10 tracking-wide">JOIN E-MERGENCY NOW !</h1>
 
           {/* Bouton Sign Up modifié pour ouvrir le popup au lieu de naviguer */}
           <button

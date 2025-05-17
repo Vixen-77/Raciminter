@@ -3,81 +3,51 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
-const LoginSig = () => {
+const LoginSig = ({ isDark }) => {
   const [isSignUp, setIsSignUp] = useState(false)
-  const [isDark, setIsDark] = useState(false)
-
-  // Synchroniser avec l'état du mode sombre global
-  useEffect(() => {
-    const checkDarkMode = () => {
-      // Vérifier si la classe 'dark' est présente sur l'élément HTML
-      const isDarkMode = document.documentElement.classList.contains("dark")
-      setIsDark(isDarkMode)
-    }
-
-    // Vérifier au chargement
-    checkDarkMode()
-
-    // Créer un observateur pour détecter les changements de classe sur l'élément HTML
-    const observer = new MutationObserver(checkDarkMode)
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
-
-    return () => observer.disconnect()
-  }, [])
-
-  // Couleur du texte en mode sombre qui correspond au bg-gray-800
-  const darkModeTextColor = "#1f2937"; // Équivalent à bg-gray-800
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white">
-      <div className={`relative w-[768px] max-w-full min-h-[480px] ${isDark ? 'bg-gray-800' : 'bg-white'} rounded-[30px] shadow-lg overflow-hidden`}>
-        {/* Form Containers */}
-        <div
-          className={`absolute top-0 w-1/2 h-full transition-all duration-500 ${
-            isSignUp ? "translate-x-full opacity-100 z-10" : "opacity-0 z-0"
-          }`}
-        >
-          <Form type="signup" isDark={isDark} darkModeTextColor={darkModeTextColor} />
-        </div>
-        <div
-          className={`absolute top-0 w-1/2 h-full transition-all duration-500 ${
-            isSignUp ? "translate-x-full opacity-0 z-0" : "opacity-100 z-10"
-          }`}
-        >
-          <Form type="signin" isDark={isDark} darkModeTextColor={darkModeTextColor} />
-        </div>
+    <div className="relative w-[768px] max-w-full h-[480px] rounded-[30px] shadow-lg overflow-hidden">
+      {/* Form Containers */}
+      <div
+        className={`absolute top-0 w-1/2 h-full transition-all duration-500 ${
+          isSignUp ? "translate-x-full opacity-100 z-10" : "opacity-0 z-0"
+        }`}
+      >
+        <Form type="signup" isDark={isDark} />
+      </div>
+      <div
+        className={`absolute top-0 w-1/2 h-full transition-all duration-500 ${
+          isSignUp ? "translate-x-full opacity-0 z-0" : "opacity-100 z-10"
+        }`}
+      >
+        <Form type="signin" isDark={isDark} />
+      </div>
 
-        {/* Toggle Container */}
-        <div
-          className={`absolute top-0 left-1/2 w-1/2 h-full overflow-hidden transition-all duration-500 rounded-r-[150px] ${
-            isSignUp ? "-translate-x-full rounded-l-[150px]" : ""
-          }`}
-        >
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-[#F05050] to-[#D32F2F]">
-            <div className="text-center">
-              <h1 
-                className="text-2xl font-bold" 
-                style={{ color: isDark ? darkModeTextColor : 'white' }}
-              >
-                {isSignUp ? "Hello, Friend!" : "Welcome Back!"}
-              </h1>
-              <p 
-                className="mt-2 text-sm" 
-                style={{ color: isDark ? `${darkModeTextColor}E6` : 'rgba(255,255,255,0.9)' }}
-              >
-                {isSignUp ? "Choose your account type to register." : "Choose your account type to sign in."}
-              </p>
-              <button
-                onClick={() => setIsSignUp(!isSignUp)}
-                style={{ 
-                  borderColor: isDark ? darkModeTextColor : 'white',
-                  color: isDark ? darkModeTextColor : 'white'
-                }}
-                className="mt-4 px-6 py-2 border rounded-md uppercase text-xs hover:bg-white hover:text-[#F05050] transition"
-              >
-                {isSignUp ? "Sign In" : "Sign Up"}
-              </button>
-            </div>
+      {/* Toggle Container */}
+      <div
+        className={`absolute top-0 left-1/2 w-1/2 h-full overflow-hidden transition-all duration-500 rounded-r-[150px] ${
+          isSignUp ? "-translate-x-full rounded-l-[150px]" : ""
+        }`}
+      >
+        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-[#F05050] to-[#D32F2F]">
+          <div className="text-center">
+            <h1 
+              className="text-2xl font-bold text-white"
+            >
+              {isSignUp ? "Hello, Friend!" : "Welcome Back!"}
+            </h1>
+            <p 
+              className="mt-2 text-sm text-white/90"
+            >
+              {isSignUp ? "Choose your account type to register." : "Choose your account type to sign in."}
+            </p>
+            <button
+              onClick={() => setIsSignUp(!isSignUp)}
+              className="mt-4 px-6 py-2 border border-white text-white rounded-md uppercase text-xs hover:bg-white hover:text-[#F05050] transition"
+            >
+              {isSignUp ? "Sign In" : "Sign Up"}
+            </button>
           </div>
         </div>
       </div>
@@ -86,7 +56,7 @@ const LoginSig = () => {
 }
 
 // Form Component
-const Form = ({ type, isDark, darkModeTextColor }) => {
+const Form = ({ type, isDark }) => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     accounttype: "",
@@ -107,9 +77,9 @@ const Form = ({ type, isDark, darkModeTextColor }) => {
     if (accountType === "patient") {
       navigate("/PatientSignup")
     } else if (accountType === "pros") {
-      navigate("/ProSignup") // Créez cette page
+      navigate("/ProSignup")
     } else if (accountType === "resh") {
-      navigate("/RespSignup") // Créez cette page
+      navigate("/RespSignup")
     }
   }
 
@@ -191,7 +161,6 @@ const Form = ({ type, isDark, darkModeTextColor }) => {
   )
 }
 
-// Export du composant principal
 export default LoginSig
 
 

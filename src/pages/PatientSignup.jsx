@@ -1,12 +1,29 @@
 "use client"
 import React, { useEffect } from 'react';
-import { useState, useRef } from "react"
+import { useState, useRef } from "react";
+import { signupPatient } from '../../services/auth';
 
 const PatientSignup = () => {
-    let x=12.2;
+    
   const [showPassword, setShowPassword] = useState(false)
   const [previewImage, setPreviewImage] = useState(null)
   const fileInputRef = useRef(null)
+
+  const calculateAge = (birthDate ) => {
+    const today = new Date()
+    let age = today.getFullYear() - birthDate.getFullYear()
+    if (age <= 17) return -1
+    const month = today.getMonth() - birthDate.getMonth()
+
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+      age--
+    }
+
+    return age
+  }
+
+  
+  const [age, setage] = useState(0);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
@@ -19,22 +36,40 @@ const PatientSignup = () => {
     }
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const formData = new FormData(e.target)
-    const formValues = Object.fromEntries(formData.entries())
-    console.log("Données du formulaire:", formValues)
-    alert("Formulaire soumis avec succès!")
-  }
+    const birthDate = new Date(e.target.DateOfBirth.value);
+    const agee = calculateAge(birthDate);
+  
+    if (agee === -1) {
+
+      return;
+    }
+  
+    setage(agee);
+    formData.append('Age',agee.toString());
+    formData.append('Role', "10");
+     try{
+        
+        console.log(formData)
+    const response = await signupPatient(formData)
+    alert('Succès', 'Inscription réussie ✅');
+    } catch (error) {
+        alert('Erreur: Échec de l’inscription ❌');
+
+    }
+    
+  };
+  
+  
   const handleClick = () => {
     console.log('Composant monté !');
   };
 
-  const [isMale, setIsMale] = useState(null); // null au début, puis true ou false
 
-const handleGenreChange = (e) => {
-  setIsMale(e.target.value === "true"); // convertit la string en booléen
-};
 
 
 
@@ -71,13 +106,13 @@ return (
                     {/* Nom et Prénom - Mis en évidence en haut du formulaire */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label htmlFor="nom" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="LastName" className="block text-sm font-medium text-gray-700 mb-1">
                                 Nom
                             </label>
                             <input
                                 type="text"
-                                id="nom"
-                                name="nom"
+                                id="LastName"
+                                name="LastName"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 pattern="^[^0-9]*$"
                                 title="Le nom ne doit pas contenir de chiffres"
@@ -86,13 +121,13 @@ return (
                         </div>
 
                         <div>
-                            <label htmlFor="prenom" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="Name" className="block text-sm font-medium text-gray-700 mb-1">
                                 Prénom
                             </label>
                             <input
                                 type="text"
-                                id="prenom"
-                                name="prenom"
+                                id="Name"
+                                name="Name"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 pattern="^[^0-9]*$"
                                 title="Le prénom ne doit pas contenir de chiffres"
@@ -102,13 +137,13 @@ return (
                     </div>
 
                     <div>
-                        <label htmlFor="adresse" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="Adress" className="block text-sm font-medium text-gray-700 mb-1">
                             Adresse
                         </label>
                         <input
                             type="text"
-                            id="adresse"
-                            name="adresse"
+                            id="adress"
+                            name="adress"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                             required
                         />
@@ -116,13 +151,13 @@ return (
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label htmlFor="codePostal" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="PostalCode" className="block text-sm font-medium text-gray-700 mb-1">
                                 Code Postal
                             </label>
                             <input
                                 type="text"
-                                id="codePostal"
-                                name="codePostal"
+                                id="PostalCode"
+                                name="PostalCode"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 pattern="^[0-9]{1,5}$"
                                 title="Le code postal doit contenir uniquement des chiffres et ne pas dépasser 5 caractères"
@@ -131,13 +166,13 @@ return (
                         </div>
 
                         <div>
-                            <label htmlFor="telephone" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="PhoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
                                 Numéro de téléphone
                             </label>
                             <input
                                 type="tel"
-                                id="telephone"
-                                name="telephone"
+                                id="PhoneNumber"
+                                name="PhoneNumber"
                                 placeholder="Ex: 06 12 34 56 78"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 pattern="^[0-9]{1,10}$"
@@ -148,13 +183,13 @@ return (
                     </div>
 
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="Email" className="block text-sm font-medium text-gray-700 mb-1">
                             Email
                         </label>
                         <input
                             type="email"
-                            id="email"
-                            name="email"
+                            id="Email"
+                            name="Email"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                             required
                         />
@@ -162,31 +197,31 @@ return (
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label htmlFor="genre" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="Gender" className="block text-sm font-medium text-gray-700 mb-1">
                                 Genre
                             </label>
                             <select
-                                id="genre"
-                                name="genre"
-                                onChange={handleGenreChange}
+                                id="Gender"
+                                name="Gender"
+                              
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 required
                             >
                                 <option value="">Sélectionnez</option>
-                                <option value="true">Homme</option>
-                             <option value="false">Femme</option>
+                                <option value="0" >Homme</option>
+                             <option value="1">Femme</option>
                         
                             </select>
                         </div>
 
                         <div>
-                            <label htmlFor="dateNaissance" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="DateOfBirth" className="block text-sm font-medium text-gray-700 mb-1">
                                 Date de naissance
                             </label>
                             <input
                                 type="date"
-                                id="dateNaissance"
-                                name="dateNaissance"
+                                id="DateOfBirth"
+                                name="DateOfBirth"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 required
                             />
@@ -195,13 +230,13 @@ return (
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label htmlFor="poids" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="Weight" className="block text-sm font-medium text-gray-700 mb-1">
                                 Poids (kg)
                             </label>
                             <input
                                 type="number"
-                                id="poids"
-                                name="poids"
+                                id="Weight"
+                                name="Weight"
                                 step="0.1"
                                 min="0"
                                 placeholder="Exemple: 70.5"
@@ -211,13 +246,13 @@ return (
                         </div>
 
                         <div>
-                            <label htmlFor="taille" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="Height" className="block text-sm font-medium text-gray-700 mb-1">
                                 Taille (cm)
                             </label>
                             <input
                                 type="number"
-                                id="taille"
-                                name="taille"
+                                id="Height"
+                                name="Height"
                                 min="0"
                                 placeholder="Exemple: 175"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
@@ -227,14 +262,14 @@ return (
                     </div>
 
                     <div>
-                        <label htmlFor="motDePasse" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="PasswordHash" className="block text-sm font-medium text-gray-700 mb-1">
                             Mot de passe
                         </label>
                         <div className="relative">
                             <input
                                 type={showPassword ? "text" : "password"}
-                                id="motDePasse"
-                                name="motDePasse"
+                                id="PasswordHash"
+                                name="PasswordHash"
                                 maxLength="16"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all pr-10"
                                 required
@@ -268,7 +303,7 @@ return (
                         <p className="text-xs text-gray-500 mt-1">Le mot de passe doit contenir au moins 8 caractères et au maximum 16 caractères</p>
                     </div>
                     <div>
-                        <label htmlFor="carteIdentite" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="File" className="block text-sm font-medium text-gray-700 mb-1">
                             Carte d'identité
                         </label>
                         <div
@@ -306,8 +341,8 @@ return (
                             )}
                             <input
                                 type="file"
-                                id="carteIdentite"
-                                name="carteIdentite"
+                                id="File"
+                                name="File"
                                 ref={fileInputRef}
                                 className="hidden"
                                 accept="image/*,.pdf"
@@ -338,16 +373,16 @@ return (
                     </div>
 
                     <button
-                        type="submit"
+                       type="submit"
                         className="w-full py-3 bg-[#F05050] text-white font-medium rounded-lg hover:bg-[#D32F2F] transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0"
                     >
                         Créer mon compte
                     </button>
                                   
               
-                    <button onClick={handleClick}>
-        Clique moi
-      </button>
+     <p>
+        prout: {age}
+     </p>
       
   
       

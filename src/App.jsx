@@ -19,6 +19,11 @@ import RespSignin from "./pages/RespSignin";
 import Patient from "./pages/Patient";
 import Help from "./pages/help";
 import ProS from "./pages/ProS";
+import RedirProS from "./pages/RedirPros";
+import Resp from "./pages/Resp";
+import Admin from "./pages/Admin";
+import HistPro from "./pages/HistPro";
+import HistPat from "./pages/HistPat";
 import AccountSettings from "./pages/AccountSettings";
 import { DarkModeProvider } from "./components/layouts/DarkModeContext";
 
@@ -38,6 +43,11 @@ function App() {
         <Route path="Help" element={<Help />} />
         <Route path="AccountSettings" element={<AccountSettings />} />
         <Route path="ProS" element={<ProS />} />
+        <Route path="Resp" element={<Resp />} />
+        <Route path="RedirProS" element={<RedirProS />} />
+        <Route path="Admin" element={<Admin />} />
+        <Route path="HistPro" element={<HistPro />} />
+        <Route path="HistPat" element={<HistPat />} />
       </Route>
     )
   );

@@ -1,16 +1,34 @@
 "use client"
 import { useState } from "react"
-
+import { useNavigate } from 'react-router-dom';
+import { signinProS} from '../../services/auth';
 const ProSignin = () => {
+    const navigate = useNavigate(); 
   const [showPassword, setShowPassword] = useState(false)
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const formData = new FormData(e.target)
-    const formValues = Object.fromEntries(formData.entries())
-    console.log("Données du formulaire:", formValues)
-    alert("Formulaire soumis avec succès!")
-  }
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      formData.append('Role', "20");
+    
+      try{
+             
+        console.log("ici")
+    const response = await signinProS(formData)
+    const data = response.data; // 👈 axios retourne { data: ... }
+
+    console.log("Réponse du back :", data);
+    localStorage.setItem('user', JSON.stringify(data));
+    
+    alert('Succès ✅');
+    navigate("/Pros");
+    } catch (error) {
+        alert('Erreur ❌');
+        console.log("erreur", error);
+
+    }
+    };
+
 
 return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -51,13 +69,13 @@ return (
 
                     <div className="grid grid-cols-1  gap-5">
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                            <label htmlFor="Email" className="block text-sm font-medium text-gray-700 mb-1">
                                 Email
                             </label>
                             <input
                                 type="email"
-                                id="email"
-                                name="email"
+                                id="Email"
+                                name="Email"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 required
                             />
@@ -66,14 +84,14 @@ return (
 
                 
                     <div>
-                        <label htmlFor="motDePasse" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="PasswordHash" className="block text-sm font-medium text-gray-700 mb-1">
                             Mot de passe
                         </label>
                         <div className="relative">
                             <input
                                 type={showPassword ? "text" : "password"}
-                                id="motDePasse"
-                                name="motDePasse"
+                                id="PasswordHash"
+                                name="PasswordHash"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all pr-10"
                                 required
                             />

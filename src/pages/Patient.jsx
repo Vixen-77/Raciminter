@@ -9,20 +9,20 @@ const Patient = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [notifications, setNotifications] = useState(3);
     
-    // Effet pour détecter si le mode sombre est activé
+    const [user, setUser] = useState(null);
+
     useEffect(() => {
-      const checkDarkMode = () => {
-        const isDarkMode = document.documentElement.classList.contains('dark');
-        setIsDark(isDarkMode);
-      };
-      
-      checkDarkMode();
-      
-      const observer = new MutationObserver(checkDarkMode);
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-      
-      return () => observer.disconnect();
-    }, []);
+        
+        const storedUser = localStorage.getItem("user");
+        console.log("Données dans localStorage :", storedUser);
+        if (storedUser) {
+          const userData = JSON.parse(storedUser);
+          console.log("User récupéré :", userData); // 👈 ajoute ça pour vérifier
+          setUser(userData);
+        } else {
+          window.location.href = "/PatientSignin";
+        }
+      }, []);
 
     // Navigation item click handler
     const handleNavClick = (item) => {
@@ -37,6 +37,10 @@ const Patient = () => {
             case 'help':
                 navigate('/help');
                 break;
+                case 'history':
+                    navigate('/HistPat');
+                  
+                    break;
             case 'logout':
                 // Implement logout logic
                 console.log('Logging out...');
@@ -99,8 +103,13 @@ const Patient = () => {
                 return null;
         }
     };
-
+    
+    if (!user) {
+        return <p>Chargement...</p>;
+      }
+      console.log("Nom du patient:", user.result.name);
     return (
+        
         <div className={`flex flex-col md:flex-row h-screen ${isDark ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-800'}`}>
             {/* Mobile Header */}
             <div className={`md:hidden flex items-center justify-between p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-md`}>
@@ -141,11 +150,11 @@ const Patient = () => {
                 <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                     <div className="flex items-center space-x-3">
                         <div className="h-12 w-12 rounded-full bg-[#f05050] flex items-center justify-center text-white font-medium text-lg">
-                            JP
+                            {user.result.name.charAt(0)}   {user.result.lastName.charAt(0)}
                         </div>
                         <div>
-                            <h3 className="font-medium">Patient</h3>
-                            <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Patient</p>
+                            <h3 className="font-medium"> {user.result.name}</h3>
+                            <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{user.result.lastName}</p>
                         </div>
                     </div>
                 </div>
@@ -374,7 +383,7 @@ const Patient = () => {
                 
                 <div className="p-6 mt-10"> {/* Ajout de mt-10 pour créer plus d'espace */}
                     <div className="mb-8">
-                        <h2 className="text-xl font-semibold mb-6">Bienvenue, Patient</h2>
+                        <h2 className="text-xl font-semibold mb-6">Bienvenue, {user.result.name} {user.result.lastName}</h2>
                         
                         {/* Stats Cards - Uniquement signes vitaux */}
                         <div className="flex justify-center mb-8">

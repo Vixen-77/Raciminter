@@ -58,3 +58,30 @@ html, body {
   margin-right: auto;
   margin-left: auto;
 }
+
+/* Correction pour les conteneurs de carte */
+.map-container, 
+.leaflet-container {
+  position: relative !important;
+  height: 500px !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Empêcher le débordement des contrôles de la carte */
+.leaflet-control-container {
+  position: absolute;
+  z-index: 1000;
+}
+
+/* Assurer que les popups restent dans les limites */
+.leaflet-popup {
+  max-width: 90%;
+}
+
+/* Correction pour les conteneurs principaux */
+.container, 
+.container-fluid {
+  overflow-x: hidden;
+  width: 100%;
+}

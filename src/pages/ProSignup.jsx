@@ -1,5 +1,6 @@
 "use client"
 import { useState, useRef } from "react"
+import { signupProS } from '../../services/auth';
 
 const ProSignup = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -7,6 +8,22 @@ const ProSignup = () => {
   const [previewMedCert, setPreviewMedCert] = useState(null)
   const idCardRef = useRef(null)
   const medCertRef = useRef(null)
+ 
+  const calculateAge = (birthDate ) => {
+      const today = new Date()
+      let age = today.getFullYear() - birthDate.getFullYear()
+      if (age <= 17) return -1
+      const month = today.getMonth() - birthDate.getMonth()
+  
+      if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+        age--
+      }
+  
+      return age
+    }
+  
+    
+    const [age, setage] = useState(0);
 
   const handleIdCardChange = (e) => {
     const file = e.target.files[0]
@@ -30,13 +47,38 @@ const ProSignup = () => {
     }
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const formData = new FormData(e.target)
-    const formValues = Object.fromEntries(formData.entries())
-    console.log("Données du formulaire:", formValues)
-    alert("Formulaire soumis avec succès!")
-  }
+   const handleSubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target)
+      const birthDate = new Date(e.target.DateOfBirth.value);
+      const agee = calculateAge(birthDate);
+    
+      if (agee === -1) {
+  
+        return;
+      }
+    
+      setage(agee);
+      formData.append('Age',agee.toString());
+      formData.append('Role', "20");
+       try{
+          
+          console.log(formData)
+      const response = await signupProS (formData)
+      alert('Succès', 'Inscription réussie ✅');
+      } catch (error) {
+          alert('Erreur: Échec de l’inscription ❌');
+  
+      }
+      
+    };
+    const [isMale, setIsMale] = useState(""); // null au début, puis true ou false
+
+const handleGenreChange = (e) => {
+  const value = e.target.value;
+   setIsMale(value === "homme" ? "1" : value === "femme" ? "0" : "");
+console.log(isMale)
+}; 
 
   // Validation pour empêcher les chiffres dans les champs nom et prénom
   const preventNumbers = (e) => {
@@ -74,13 +116,13 @@ const ProSignup = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="nom" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="LastName" className="block text-sm font-medium text-gray-700 mb-1">
                   Nom
                 </label>
                 <input
                   type="text"
-                  id="nom"
-                  name="nom"
+                  id="LastName"
+                  name="LastName"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                   required
                   onKeyPress={preventNumbers}
@@ -88,13 +130,13 @@ const ProSignup = () => {
               </div>
 
               <div>
-                <label htmlFor="prenom" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="Name" className="block text-sm font-medium text-gray-700 mb-1">
                   Prénom
                 </label>
                 <input
                   type="text"
-                  id="prenom"
-                  name="prenom"
+                  id="Name"
+                  name="Name"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                   required
                   onKeyPress={preventNumbers}
@@ -104,44 +146,47 @@ const ProSignup = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="dateNaissance" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="DateOfBirth" className="block text-sm font-medium text-gray-700 mb-1">
                   Date de naissance
                 </label>
                 <input
                   type="date"
-                  id="dateNaissance"
-                  name="dateNaissance"
+                  id="DateOfBirth"
+                  name="DateOfBirth"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                   required
                 />
               </div>
 
               <div>
-                <label htmlFor="genre" className="block text-sm font-medium text-gray-700 mb-1">
-                  Genre
-                </label>
-                <select
-                  id="genre"
-                  name="genre"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
-                  required
-                >
-                  <option value="">Sélectionnez</option>
-                  <option value="homme">Homme</option>
-                  <option value="femme">Femme</option>
-                  <option value="autre">Autre</option>
-                </select>
-              </div>
+                            <label htmlFor="Gender" className="block text-sm font-medium text-gray-700 mb-1">
+                                Genre
+                            </label>
+                            <select
+                                id="Gender"
+                                name="Gender"
+                                onChange={handleGenreChange}
+                                defaultValue="" 
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
+                                required
+                            >
+                                <option value="" disabled>Sélectionnez</option>
+                                <option value="homme">Homme</option>
+                             <option value="femme">Femme</option>
+                        
+                            </select>
+                        </div>
             </div>
+            
 
             <div>
-              <label htmlFor="adresse" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="Adress" className="block text-sm font-medium text-gray-700 mb-1">
                 Adresse
               </label>
               <input
                 type="text"
-                id="adresse"
-                name="adresse"
+                id="Adress"
+                name="Adress"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                 required
               />
@@ -149,13 +194,13 @@ const ProSignup = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="codePostal" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="PostalCode" className="block text-sm font-medium text-gray-700 mb-1">
                   Code Postal
                 </label>
                 <input
                   type="text"
-                  id="codePostal"
-                  name="codePostal"
+                  id="PostalCode"
+                  name="PostalCode"
                   pattern="[0-9]{5}"
                   maxLength="5"
                   placeholder="Ex: 75001"
@@ -166,13 +211,13 @@ const ProSignup = () => {
               </div>
 
               <div>
-                <label htmlFor="telephone" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="PhoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
                   Numéro de téléphone
                 </label>
                 <input
                   type="tel"
-                  id="telephone"
-                  name="telephone"
+                  id="PhoneNumber"
+                  name="PhoneNumber"
                   pattern="[0-9]{10}"
                   maxLength="10"
                   placeholder="Ex: 0612345678"
@@ -184,27 +229,27 @@ const ProSignup = () => {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="Email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email
               </label>
               <input
                 type="email"
-                id="email"
-                name="email"
+                id="Email"
+                name="Email"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="motDePasse" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="PasswordHash" className="block text-sm font-medium text-gray-700 mb-1">
                 Mot de passe
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  id="motDePasse"
-                  name="motDePasse"
+                  id="PasswordHash"
+                  name="PasswordHash"
                   minLength="8"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all pr-10"
                   required
@@ -239,7 +284,7 @@ const ProSignup = () => {
             </div>
 
             <div>
-              <label htmlFor="carteIdentite" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="File" className="block text-sm font-medium text-gray-700 mb-1">
                 Carte d'identité
               </label>
               <div
@@ -277,8 +322,8 @@ const ProSignup = () => {
                 )}
                 <input
                   type="file"
-                  id="carteIdentite"
-                  name="carteIdentite"
+                  id="File"
+                  name="File"
                   ref={idCardRef}
                   className="hidden"
                   accept="image/*"
@@ -289,7 +334,7 @@ const ProSignup = () => {
             </div>
 
             <div>
-              <label htmlFor="certificatMedical" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="FileCertif" className="block text-sm font-medium text-gray-700 mb-1">
                 Certificat médical
               </label>
               <div
@@ -327,8 +372,8 @@ const ProSignup = () => {
                 )}
                 <input
                   type="file"
-                  id="certificatMedical"
-                  name="certificatMedical"
+                  id="FileCertif"
+                  name="FileCertif"
                   ref={medCertRef}
                   className="hidden"
                   accept="image/*"
