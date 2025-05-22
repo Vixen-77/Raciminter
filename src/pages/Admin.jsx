@@ -303,6 +303,9 @@ const Admin = () => {
           <Link to="/verifpro" className="px-6 py-3 font-medium text-gray-600 hover:text-[#F05050]">
             Vérifier comptes professionnels
           </Link>
+          <Link to="/Moderation" className="px-6 py-3 font-medium text-gray-600 hover:text-[#F05050]">
+            Modération
+          </Link>
         </div>
       </div>
 

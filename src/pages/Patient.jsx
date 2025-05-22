@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from "../assets/montretest.png";
+import { HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr"
+import montreImage from "../assets/montretest.png";
+import cgmImage from "../assets/cgmrouge.png";
+import voitureImage from "../assets/voiturerouge.png";
+import telImage from "../assets/tel.png";
 
 const Patient = () => {
     const navigate = useNavigate();
@@ -12,17 +16,16 @@ const Patient = () => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        
         const storedUser = localStorage.getItem("user");
         console.log("Données dans localStorage :", storedUser);
         if (storedUser) {
           const userData = JSON.parse(storedUser);
-          console.log("User récupéré :", userData); // 👈 ajoute ça pour vérifier
+          console.log("User récupéré :", userData);
           setUser(userData);
         } else {
           window.location.href = "/PatientSignin";
         }
-      }, []);
+    }, []);
 
     // Navigation item click handler
     const handleNavClick = (item) => {
@@ -37,10 +40,15 @@ const Patient = () => {
             case 'help':
                 navigate('/help');
                 break;
-                case 'history':
-                    navigate('/HistPat');
-                  
-                    break;
+            case 'history':
+                navigate('/HistPat');
+                break;
+            case 'listproches':
+                navigate('/ListProches');
+                break;
+            case 'medrec':
+                navigate('/MedRec');
+                break;
             case 'logout':
                 // Implement logout logic
                 console.log('Logging out...');
@@ -53,23 +61,15 @@ const Patient = () => {
 
     // Données simplifiées pour les statistiques - uniquement signes vitaux
     const stats = [
-        { label: 'Signes vitaux', value: 'Normaux', icon: 'activity', color: 'bg-green-100 text-green-600' },
+        { label: 'Vital Signs', value: 'Normal', icon: 'activity', color: 'bg-green-100 text-green-600' },
     ];
 
-    // Données simplifiées pour les cartes - uniquement les images
+    // Données simplifiées pour les cartes - avec toutes les images
     const cards = [
-        {
-            image: logo,
-        },
-        {
-            image: null,
-        },
-        {
-            image: null,
-        },
-        {
-            image: null,
-        }
+        { image: montreImage, title: "Montre" },
+        { image: cgmImage, title: "CGM" },
+        { image: voitureImage, title: "Voiture" },
+        { image: telImage, title: "Téléphone" }
     ];
 
     // Fonction pour rendre une icône simple
@@ -106,10 +106,11 @@ const Patient = () => {
     
     if (!user) {
         return <p>Chargement...</p>;
-      }
-      console.log("Nom du patient:", user.result.name);
+    }
+    
+    console.log("Nom du patient:", user.result.name);
+    
     return (
-        
         <div className={`flex flex-col md:flex-row h-screen ${isDark ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-800'}`}>
             {/* Mobile Header */}
             <div className={`md:hidden flex items-center justify-between p-4 ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-md`}>
@@ -131,7 +132,6 @@ const Patient = () => {
                             </span>
                         )}
                     </button>
-                    
                 </div>
             </div>
 
@@ -143,7 +143,7 @@ const Patient = () => {
                     </div>
                     <div>
                         <h2 className="text-xl font-bold">E-mergency</h2>
-                        <p className={`text-xs mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Portail Patient</p>
+                        <p className={`text-xs mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Patient Portal</p>
                     </div>
                 </div>
                 
@@ -171,7 +171,7 @@ const Patient = () => {
                                 }`}
                             >
                                 <span className="mr-3 h-5 w-5">{renderIcon('home')}</span>
-                                <span className="font-medium">Tableau de bord</span>
+                                <span className="font-medium">Dashboard</span>
                             </button>
                         </li>
                         <li>
@@ -184,22 +184,36 @@ const Patient = () => {
                                 }`}
                             >
                                 <span className="mr-3 h-5 w-5">{renderIcon('settings')}</span>
-                                <span className="font-medium">Paramètres</span>
+                                <span className="font-medium">Settings</span>
                             </button>
                         </li>
                         <li>
                             <button 
-                                onClick={() => handleNavClick('personal')}
+                                onClick={() => handleNavClick('listproches')}
                                 className={`w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 ${
-                                    activeItem === 'personal' 
+                                    activeItem === 'user' 
                                         ? 'bg-[#f05050] text-white shadow-md' 
                                         : `${isDark ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'}`
                                 }`}
                             >
-                                <span className="mr-3 h-5 w-5">{renderIcon('file-edit')}</span>
-                                <span className="font-medium">Profil</span>
+                                <span className="mr-3 h-5 w-5">{renderIcon('user')}</span>
+                                <span className="font-medium">Relatives</span>
                             </button>
                         </li>
+                        <li>
+                            <button 
+                                onClick={() => handleNavClick('medrec')}
+                                className={`w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 ${
+                                    activeItem === 'activity' 
+                                        ? 'bg-[#f05050] text-white shadow-md' 
+                                        : `${isDark ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'}`
+                                }`}
+                            >
+                                <span className="mr-3 h-5 w-5">{renderIcon('activity')}</span>
+                                <span className="font-medium">Medical Records</span>
+                            </button>
+                        </li>
+                      
                         <li>
                             <button 
                                 onClick={() => handleNavClick('history')}
@@ -210,7 +224,7 @@ const Patient = () => {
                                 }`}
                             >
                                 <span className="mr-3 h-5 w-5">{renderIcon('history')}</span>
-                                <span className="font-medium">Historique</span>
+                                <span className="font-medium">History</span>
                             </button>
                         </li>
                         <li>
@@ -223,7 +237,7 @@ const Patient = () => {
                                 }`}
                             >
                                 <span className="mr-3 h-5 w-5">{renderIcon('help-circle')}</span>
-                                <span className="font-medium">Aide</span>
+                                <span className="font-medium">Help</span>
                             </button>
                         </li>
                     </ul>
@@ -237,7 +251,7 @@ const Patient = () => {
                         } transition-all duration-200`}
                     >
                         <span className="mr-2 h-5 w-5">{renderIcon('log-out')}</span>
-                        <span className="font-medium">Déconnexion</span>
+                        <span className="font-medium">Logout</span>
                     </button>
                 </div>
             </div>
@@ -263,18 +277,6 @@ const Patient = () => {
                             </div>
                         </div>
                         
-                        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                            <div className="flex items-center space-x-3">
-                                <div className="h-10 w-10 rounded-full bg-[#f05050] flex items-center justify-center text-white font-medium">
-                                    JP
-                                </div>
-                                <div>
-                                    <h3 className="font-medium">Patien</h3>
-                                    <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Patient</p>
-                                </div>
-                            </div>
-                        </div>
-                        
                         <nav className="mt-4 px-3">
                             <ul className="space-y-2">
                                 <li>
@@ -287,7 +289,7 @@ const Patient = () => {
                                         }`}
                                     >
                                         <span className="mr-3 h-5 w-5">{renderIcon('home')}</span>
-                                        <span className="font-medium">Tableau de bord</span>
+                                        <span className="font-medium">Dashboard</span>
                                     </button>
                                 </li>
                                 <li>
@@ -300,7 +302,7 @@ const Patient = () => {
                                         }`}
                                     >
                                         <span className="mr-3 h-5 w-5">{renderIcon('settings')}</span>
-                                        <span className="font-medium">Paramètres</span>
+                                        <span className="font-medium">Settings</span>
                                     </button>
                                 </li>
                                 <li>
@@ -313,7 +315,20 @@ const Patient = () => {
                                         }`}
                                     >
                                         <span className="mr-3 h-5 w-5">{renderIcon('file-edit')}</span>
-                                        <span className="font-medium">Profil</span>
+                                        <span className="font-medium">Profile</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button 
+                                        onClick={() => handleNavClick('listproches')}
+                                        className={`w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 ${
+                                            activeItem === 'user' 
+                                                ? 'bg-[#f05050] text-white shadow-md' 
+                                                : `${isDark ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'}`
+                                        }`}
+                                    >
+                                        <span className="mr-3 h-5 w-5">{renderIcon('user')}</span>
+                                        <span className="font-medium">Relatives</span>
                                     </button>
                                 </li>
                                 <li>
@@ -326,7 +341,7 @@ const Patient = () => {
                                         }`}
                                     >
                                         <span className="mr-3 h-5 w-5">{renderIcon('history')}</span>
-                                        <span className="font-medium">Historique</span>
+                                        <span className="font-medium">History</span>
                                     </button>
                                 </li>
                                 <li>
@@ -339,7 +354,7 @@ const Patient = () => {
                                         }`}
                                     >
                                         <span className="mr-3 h-5 w-5">{renderIcon('help-circle')}</span>
-                                        <span className="font-medium">Aide</span>
+                                        <span className="font-medium">Help</span>
                                     </button>
                                 </li>
                                 <li>
@@ -352,7 +367,7 @@ const Patient = () => {
                                         }`}
                                     >
                                         <span className="mr-3 h-5 w-5">{renderIcon('log-out')}</span>
-                                        <span className="font-medium">Déconnexion</span>
+                                        <span className="font-medium">Logout</span>
                                     </button>
                                 </li>
                             </ul>
@@ -361,61 +376,30 @@ const Patient = () => {
                 </div>
             )}
                         
-            {/* Main Content - Ajout d'un padding-top pour éviter la collision avec le header */}
-            <div className="flex-1 overflow-auto pt-16"> {/* Ajout de pt-16 pour éviter la collision */}
-                {/* Desktop Header */}
-                <div className={`hidden md:flex items-center justify-between p-6 ${isDark ? 'bg-gray-800' : 'bg-white'} shadow-sm fixed top-0 left-64 right-0 z-10`}>
-                    
-                    <div className="flex items-center space-x-4">
-                        <button className="relative p-2">
-                            <span className="h-5 w-5">{renderIcon('bell')}</span>
-                            {notifications > 0 && (
-                                <span className="absolute top-1 right-1 bg-[#f05050] text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                                    {notifications}
-                                </span>
-                            )}
-                        </button>
-                        <div className="h-8 w-8 rounded-full bg-[#f05050] flex items-center justify-center text-white font-medium">
-                            JP
-                        </div>
-                    </div>
-                </div>
-                
-                <div className="p-6 mt-10"> {/* Ajout de mt-10 pour créer plus d'espace */}
-                    <div className="mb-8">
-                        <h2 className="text-xl font-semibold mb-6">Bienvenue, {user.result.name} {user.result.lastName}</h2>
+            {/* Main Content */}
+            <div className="flex-1 overflow-auto"> 
+                <div className="p-6 mt-10">
+                    <div className="mb-5">
+                        <h2 className="text-xl font-semibold mb-6">Welcome, {user.result.name} {user.result.lastName}</h2>
                         
-                        {/* Stats Cards - Uniquement signes vitaux */}
-                        <div className="flex justify-center mb-8">
-                            {stats.map((stat, index) => (
-                                <div 
-                                    key={index} 
-                                    className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm p-6 flex items-center max-w-xs`}
-                                >
-                                    <div className={`${stat.color} p-4 rounded-full mr-5`}>
-                                        <span className="h-6 w-6 block">{renderIcon(stat.icon)}</span>
-                                    </div>
-                                    <div>
-                                        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{stat.label}</p>
-                                        <p className="font-semibold text-lg">{stat.value}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        
-                        {/* Feature Cards - Uniquement les images */}
+                        {/* Feature Cards - Using actual img elements instead of background-image */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {cards.map((card, index) => (
                                 <div 
                                     key={index} 
-                                    className={`${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'} rounded-lg shadow-md overflow-hidden transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer h-64 flex items-center justify-center`}
-                                    style={{ backgroundImage: `url(${card.image || "/placeholder.svg"})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                                    className={`${isDark ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'} rounded-lg shadow-md overflow-hidden transition-all duration-200 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer h-64`}
                                 >
-                                    {!card.image && (
-                                        <div className={`w-40 h-40 ${isDark ? 'bg-gray-700' : 'bg-gray-200'} flex items-center justify-center rounded-lg`}>
-                                            <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} font-medium`}>Image</p>
-                                        </div>
-                                    )}
+                                    <div className="h-full w-full relative">
+                                        <img 
+                                            src={card.image || "/placeholder.svg"} 
+                                            alt={card.title || `Image ${index + 1}`}
+                                            className="w-full h-full object-contain p-4"
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = "https://via.placeholder.com/400x300?text=Image+Not+Found";
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             ))}
                         </div>

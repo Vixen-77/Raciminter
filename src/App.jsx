@@ -22,9 +22,12 @@ import ProS from "./pages/ProS";
 import RedirProS from "./pages/RedirPros";
 import Resp from "./pages/Resp";
 import Admin from "./pages/Admin";
+import Listproches from "./pages/ListProches";
 import HistPro from "./pages/HistPro";
 import HistPat from "./pages/HistPat";
 import AccountSettings from "./pages/AccountSettings";
+import Moderation from "./pages/Moderation";
+import MedRec from "./pages/MedRec";
 import { DarkModeProvider } from "./components/layouts/DarkModeContext";
 
 function App() {
@@ -48,6 +51,9 @@ function App() {
         <Route path="Admin" element={<Admin />} />
         <Route path="HistPro" element={<HistPro />} />
         <Route path="HistPat" element={<HistPat />} />
+        <Route path="Listproches" element={<Listproches />} />
+        <Route path="Moderation" element={<Moderation/>} />
+        <Route path="MedRec" element={<MedRec/>} />
       </Route>
     )
   );

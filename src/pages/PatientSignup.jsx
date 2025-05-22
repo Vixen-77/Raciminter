@@ -76,38 +76,30 @@ const PatientSignup = () => {
 return (
     <div className="flex items-center justify-center pt-180 pb-16 px-4">
         <div className="w-full max-w-4xl flex overflow-hidden rounded-2xl shadow-xl">
-            {/* Section gauche - Image/Bannière */}
+            {/* Left Section - Image/Banner */}
             <div className="hidden md:block w-2/5 bg-gradient-to-b from-[#F05050] to-[#D32F2F] p-12 text-white">
                 <div className="h-full flex flex-col justify-between">
                     <div>
-                        <h2 className="text-3xl font-bold mb-6">Bienvenue chez E-mergency</h2>
-                        <p className="text-white/90 mb-8">Créez votre compte patient pour accéder à nos services.</p>
+                        <h2 className="text-3xl font-bold mb-6">Welcome to E-mergency</h2>
+                        <p className="text-white/90 mb-8">Create your patient account to access our services.</p>
                     </div>
-                    <div>
-                        <div className="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
-                            <p className="italic text-sm">"test"</p>
-                            <p className="mt-2 font-semibold"> 1 2 3 </p>
-                        </div>
-                    </div>
-        </div>
-                
-                
-  
+                  
+                </div>
             </div>
 
-            {/* Section droite - Formulaire */}
+            {/* Right Section - Form */}
             <div className="w-full md:w-3/5 bg-white p-8">
                 <div className="text-center mb-6">
-                    <h1 className="text-2xl font-bold text-[#F05050] mb-2">Inscription Patient</h1>
-                    <p className="text-gray-500">Remplissez le formulaire pour créer votre compte</p>
+                    <h1 className="text-2xl font-bold text-[#F05050] mb-2">Patient Signup</h1>
+                    <p className="text-gray-500">Fill out the form to create your account</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Nom et Prénom - Mis en évidence en haut du formulaire */}
+                    {/* Last Name and First Name - Highlighted at the top of the form */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label htmlFor="LastName" className="block text-sm font-medium text-gray-700 mb-1">
-                                Nom
+                                Last Name
                             </label>
                             <input
                                 type="text"
@@ -115,14 +107,14 @@ return (
                                 name="LastName"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 pattern="^[^0-9]*$"
-                                title="Le nom ne doit pas contenir de chiffres"
+                                title="The last name must not contain numbers"
                                 required
                             />
                         </div>
 
                         <div>
                             <label htmlFor="Name" className="block text-sm font-medium text-gray-700 mb-1">
-                                Prénom
+                                First Name
                             </label>
                             <input
                                 type="text"
@@ -130,7 +122,7 @@ return (
                                 name="Name"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 pattern="^[^0-9]*$"
-                                title="Le prénom ne doit pas contenir de chiffres"
+                                title="The first name must not contain numbers"
                                 required
                             />
                         </div>
@@ -138,7 +130,7 @@ return (
 
                     <div>
                         <label htmlFor="Adress" className="block text-sm font-medium text-gray-700 mb-1">
-                            Adresse
+                            Address
                         </label>
                         <input
                             type="text"
@@ -152,7 +144,7 @@ return (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label htmlFor="PostalCode" className="block text-sm font-medium text-gray-700 mb-1">
-                                Code Postal
+                                Postal Code
                             </label>
                             <input
                                 type="text"
@@ -160,14 +152,14 @@ return (
                                 name="PostalCode"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 pattern="^[0-9]{1,5}$"
-                                title="Le code postal doit contenir uniquement des chiffres et ne pas dépasser 5 caractères"
+                                title="The postal code must contain only numbers and not exceed 5 characters"
                                 required
                             />
                         </div>
 
                         <div>
                             <label htmlFor="PhoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
-                                Numéro de téléphone
+                                Phone Number
                             </label>
                             <input
                                 type="tel"
@@ -176,7 +168,7 @@ return (
                                 placeholder="Ex: 06 12 34 56 78"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 pattern="^[0-9]{1,10}$"
-                                title="Le numéro de téléphone doit contenir uniquement des chiffres et ne pas dépasser 10 caractères"
+                                title="The phone number must contain only numbers and not exceed 10 characters"
                                 required
                             />
                         </div>
@@ -198,25 +190,23 @@ return (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label htmlFor="Gender" className="block text-sm font-medium text-gray-700 mb-1">
-                                Genre
+                                Gender
                             </label>
                             <select
                                 id="Gender"
                                 name="Gender"
-                              
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 required
                             >
-                                <option value="">Sélectionnez</option>
-                                <option value="0" >Homme</option>
-                             <option value="1">Femme</option>
-                        
+                                <option value="">Select</option>
+                                <option value="0">Male</option>
+                                <option value="1">Female</option>
                             </select>
                         </div>
 
                         <div>
                             <label htmlFor="DateOfBirth" className="block text-sm font-medium text-gray-700 mb-1">
-                                Date de naissance
+                                Date of Birth
                             </label>
                             <input
                                 type="date"
@@ -231,7 +221,7 @@ return (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label htmlFor="Weight" className="block text-sm font-medium text-gray-700 mb-1">
-                                Poids (kg)
+                                Weight (kg)
                             </label>
                             <input
                                 type="number"
@@ -239,7 +229,7 @@ return (
                                 name="Weight"
                                 step="0.1"
                                 min="0"
-                                placeholder="Exemple: 70.5"
+                                placeholder="Example: 70.5"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 required
                             />
@@ -247,14 +237,14 @@ return (
 
                         <div>
                             <label htmlFor="Height" className="block text-sm font-medium text-gray-700 mb-1">
-                                Taille (cm)
+                                Height (cm)
                             </label>
                             <input
                                 type="number"
                                 id="Height"
                                 name="Height"
                                 min="0"
-                                placeholder="Exemple: 175"
+                                placeholder="Example: 175"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
                                 required
                             />
@@ -263,7 +253,7 @@ return (
 
                     <div>
                         <label htmlFor="PasswordHash" className="block text-sm font-medium text-gray-700 mb-1">
-                            Mot de passe
+                            Password
                         </label>
                         <div className="relative">
                             <input
@@ -280,31 +270,33 @@ return (
                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#F05050] transition-colors"
                             >
                                 {showPassword ? (
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z"
-                                            clipRule="evenodd"
-                                        />
-                                        <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
-                                    </svg>
-                                ) : (
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                        <path
-                                            fillRule="evenodd"
-                                            d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                                            clipRule="evenodd"
-                                        />
-                                    </svg>
+                              
+                                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                   <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                   <path
+                                       fillRule="evenodd"
+                                       d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                                       clipRule="evenodd"
+                                    />
+                                  </svg>
+                                       ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 </svg>20 20" fill="currentColor">
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z"
+                                        clipRule="evenodd"
+                                    />
+                                    <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
+                                </svg>
+                                 
                                 )}
                             </button>
                         </div>
-                        <p className="text-xs text-gray-500 mt-1">Le mot de passe doit contenir au moins 8 caractères et au maximum 16 caractères</p>
+                        <p className="text-xs text-gray-500 mt-1">The password must contain at least 8 characters and at most 16 characters</p>
                     </div>
                     <div>
                         <label htmlFor="File" className="block text-sm font-medium text-gray-700 mb-1">
-                            Carte d'identité
+                            Identity Card
                         </label>
                         <div
                             className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-[#F05050] transition-colors"
@@ -314,10 +306,10 @@ return (
                                 <div className="flex flex-col items-center">
                                     <img
                                         src={previewImage || "/placeholder.svg"}
-                                        alt="Aperçu carte d'identité"
+                                        alt="Identity card preview"
                                         className="h-32 object-contain mb-2 rounded"
                                     />
-                                    <p className="text-sm text-gray-500">Cliquez pour changer l'image</p>
+                                    <p className="text-sm text-gray-500">Click to change the image</p>
                                 </div>
                             ) : (
                                 <div className="py-4">
@@ -335,8 +327,8 @@ return (
                                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                                         />
                                     </svg>
-                                    <p className="text-sm text-gray-500">Cliquez pour télécharger votre carte d'identité</p>
-                                    <p className="text-xs text-gray-400 mt-1">Formats acceptés: JPG, PNG, PDF</p>
+                                    <p className="text-sm text-gray-500">Click to upload your identity card</p>
+                                    <p className="text-xs text-gray-400 mt-1">Accepted formats: JPG, PNG, PDF</p>
                                 </div>
                             )}
                             <input
@@ -351,47 +343,39 @@ return (
                             />
                         </div>
                     </div>
-
                     <div className="flex items-center mt-4">
-                        <input
-                            type="checkbox"
-                            id="acceptTerms"
-                            name="acceptTerms"
-                            className="h-4 w-4 text-[#F05050] focus:ring-[#F05050] border-gray-300 rounded"
-                            required
-                        />
-                        <label htmlFor="acceptTerms" className="ml-2 block text-sm text-gray-700">
-                            J'accepte les{" "}
-                            <a href="#" className="text-[#F05050] hover:underline">
-                                conditions d'utilisation
-                            </a>{" "}
-                            et la{" "}
-                            <a href="#" className="text-[#F05050] hover:underline">
-                                politique de confidentialité
-                            </a>
-                        </label>
+              <input
+                type="checkbox"
+                id="acceptTerms"
+                name="acceptTerms"
+                className="h-4 w-4 text-[#F05050] focus:ring-[#F05050] border-gray-300 rounded"
+                required
+              />
+
+                    <label htmlFor="acceptTerms" className="ml-2 block text-sm text-gray-700">
+                        I accept the{" "}
+                        <a href="#" className="text-[#F05050] hover:underline">
+                            terms of use
+                        </a>{" "}
+                        and the{" "}
+                        <a href="#" className="text-[#F05050] hover:underline">
+                            privacy policy
+                        </a>
+                        .
+                    </label>
                     </div>
 
                     <button
-                       type="submit"
+                        type="submit"
                         className="w-full py-3 bg-[#F05050] text-white font-medium rounded-lg hover:bg-[#D32F2F] transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0"
                     >
-                        Créer mon compte
+                        Create my account
                     </button>
-                                  
-              
-     <p>
-        prout: {age}
-     </p>
-      
-  
-      
- 
 
                     <p className="text-sm text-gray-500 text-center mt-4">
-                        Vous avez déjà un compte?{" "}
+                        Already have an account?{" "}
                         <a href="/PatientSignin" className="text-[#F05050] hover:underline font-medium">
-                            Connectez-vous
+                            Log in
                         </a>
                     </p>
                 </form>

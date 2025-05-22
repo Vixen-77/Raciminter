@@ -27,9 +27,12 @@ const PatientSignin = () => {
      alert('Succès ✅');
      navigate("/Patient");
      } catch (error) {
-         alert('Erreur ❌');
-         console.log("erreur", error);
- 
+        if(error.status === 500){
+         alert(`Erreur : mail or password incorrect`);
+         console.log("erreur", error);}
+         else if(error.status === 403){
+            alert(`Erreur : your account is not validated yet`);
+            console.log("erreur", error);}
      }
   };
 
@@ -40,27 +43,20 @@ return (
             <div className="hidden md:block w-2/5 bg-gradient-to-b from-[#F05050] to-[#D32F2F] p-12 text-white">
                 <div className="h-full flex flex-col justify-between">
                     <div>
-                        <h2 className="text-3xl font-bold mb-6">Bienvenue chez E-mergency</h2>
+                        <h2 className="text-3xl font-bold mb-6">Welcome to E-mergency</h2>
                         <p className="text-white/90 mb-8">
-                            Créez votre compte patient pour accéder à nos services.
+                            Create your patient account to access our services.
                         </p>
                     </div>
-                    <div>
-                        <div className="bg-white/10 p-4 rounded-lg backdrop-blur-sm">
-                            <p className="italic text-sm">
-                                "test"
-                            </p>
-                            <p className="mt-2 font-semibold"> 1 2 3 </p>
-                        </div>
-                    </div>
+               
                 </div>
             </div>
 
             {/* Section droite - Formulaire */}
             <div className="w-full md:w-3/5 bg-white p-8">
                 <div className="text-center mb-8">
-                    <h1 className="text-2xl font-bold text-[#F05050] mb-2">Se connecter en tant que patient </h1>
-                    <p className="text-gray-500">saissez vos données pour accéder à votre</p>
+                    <h1 className="text-2xl font-bold text-[#F05050] mb-2">Sign in as a patient</h1>
+                    <p className="text-gray-500">Enter your details to access your account</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -88,7 +84,7 @@ return (
                 
                     <div>
                         <label htmlFor="PasswordHash" className="block text-sm font-medium text-gray-700 mb-1">
-                            Mot de passe
+                            Password
                         </label>
                         <div className="relative">
                             <input
@@ -133,10 +129,10 @@ return (
                         type="submit"
                         className="w-full py-3 bg-[#F05050] text-white font-medium rounded-lg hover:bg-[#D32F2F] transition-colors shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0"
                     >
-                        Se connecter
+                        Sign in
                     </button>
                     <a href="/Patient" className="text-[#F05050] hover:underline font-medium">
-                        lancer patient
+                        Launch patient
                     </a>
                 </form>
 

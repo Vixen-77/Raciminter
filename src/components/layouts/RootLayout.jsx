@@ -26,6 +26,9 @@ const RootLayout = () => {
     "/Admin",
     "/Pros",
     "/RedirPros",
+    "/LoginSig",
+    "/ListProches",
+    "/MedRec",
     "/HistPro"
   ];
   

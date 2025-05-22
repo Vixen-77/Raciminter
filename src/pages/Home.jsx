@@ -87,14 +87,14 @@ const Home = ({ isDarkMode }) => {
         {/* Footer */}
       </div>
 
-      {/* Popup LoginSig */}
-      {showLoginPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0" onClick={closeLoginPopup}></div>
-          <div className="relative z-10">
-            {/* Bouton de fermeture */}
+     {/* Popup LoginSig */}
+        {showLoginPopup && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="absolute inset-0" onClick={closeLoginPopup}></div>
+            <div className="relative z-10">
+          {/* Bouton de fermeture */}
             <button
-              className="absolute top-4 right-4 z-20 text-gray-500 hover:text-gray-700 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-md"
+              className="absolute top-4 right-4 z-20 text-gray-100 hover:text-gray-200 bg-[#f05050] rounded-full w-6 h-6 flex items-center justify-center shadow-md transition duration-300 transform hover:scale-70"
               onClick={closeLoginPopup}
             >
               ×
