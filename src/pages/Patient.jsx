@@ -5,6 +5,8 @@ import montreImage from "../assets/montretest.png";
 import cgmImage from "../assets/cgmrouge.png";
 import voitureImage from "../assets/voiturerouge.png";
 import telImage from "../assets/tel.png";
+import axios from 'axios';
+
 
 const Patient = () => {
     const navigate = useNavigate();
@@ -49,15 +51,71 @@ const Patient = () => {
             case 'medrec':
                 navigate('/MedRec');
                 break;
-            case 'logout':
+           /* case 'logout':
                 // Implement logout logic
                 console.log('Logging out...');
-                break;
+                break;*/
             default:
                 // Just update the active state for other items
                 break;
         }
     };
+
+
+
+
+
+
+ const handleLogoutClick = async () => {
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) {
+      console.warn("Aucun utilisateur connecté.");
+      return;
+    }
+    const user = JSON.parse(storedUser);
+
+    const formData = new FormData();
+    formData.append("Id", user.result.uid);
+    formData.append("Role", 10); // "10" pour patient, "20" pour pro
+
+    try {
+      const response = await axios.post("http://192.168.1.5:5001/api/auth/Logout", formData);
+      console.log(response.data); // "Déconnexion réussie."
+
+      // Nettoyage local
+      localStorage.removeItem("user");
+
+      // Redirection
+      navigate("/Loading"); // Route de connexion
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion :", error);
+    }
+  };
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Données simplifiées pour les statistiques - uniquement signes vitaux
     const stats = [
@@ -245,7 +303,7 @@ const Patient = () => {
                 
                 <div className="p-4 border-t border-gray-200 dark:border-gray-700">
                     <button 
-                        onClick={() => handleNavClick('logout')}
+                        onClick={() => handleLogoutClick()}
                         className={`w-full flex items-center justify-center px-4 py-3 rounded-lg ${
                             isDark ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         } transition-all duration-200`}

@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useState, useRef } from "react";
 import { signupPatient } from '../../services/auth';
+import { useNavigate } from 'react-router-dom';
 
 const PatientSignup = () => {
     
@@ -56,7 +57,10 @@ const PatientSignup = () => {
         
         console.log(formData)
     const response = await signupPatient(formData)
-    alert('Succès', 'Inscription réussie ✅');
+    console.log(response);
+    navigate('/LoadingDoneinscription');
+   // alert('Succès', 'Inscription réussie ✅');
+    
     } catch (error) {
         alert('Erreur: Échec de l’inscription ❌');
 
@@ -105,7 +109,7 @@ return (
                                 type="text"
                                 id="LastName"
                                 name="LastName"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all text-black"
                                 pattern="^[^0-9]*$"
                                 title="The last name must not contain numbers"
                                 required
@@ -120,7 +124,7 @@ return (
                                 type="text"
                                 id="Name"
                                 name="Name"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all text-black"
                                 pattern="^[^0-9]*$"
                                 title="The first name must not contain numbers"
                                 required
@@ -136,7 +140,7 @@ return (
                             type="text"
                             id="adress"
                             name="adress"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all text-black"
                             required
                         />
                     </div>
@@ -150,7 +154,7 @@ return (
                                 type="text"
                                 id="PostalCode"
                                 name="PostalCode"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all text-black"
                                 pattern="^[0-9]{1,5}$"
                                 title="The postal code must contain only numbers and not exceed 5 characters"
                                 required
@@ -166,7 +170,7 @@ return (
                                 id="PhoneNumber"
                                 name="PhoneNumber"
                                 placeholder="Ex: 06 12 34 56 78"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all text-black"
                                 pattern="^[0-9]{1,10}$"
                                 title="The phone number must contain only numbers and not exceed 10 characters"
                                 required
@@ -182,7 +186,7 @@ return (
                             type="email"
                             id="Email"
                             name="Email"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all text-black"
                             required
                         />
                     </div>
@@ -195,7 +199,7 @@ return (
                             <select
                                 id="Gender"
                                 name="Gender"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all text-black"
                                 required
                             >
                                 <option value="">Select</option>
@@ -212,7 +216,7 @@ return (
                                 type="date"
                                 id="DateOfBirth"
                                 name="DateOfBirth"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all text-black"
                                 required
                             />
                         </div>
@@ -230,7 +234,7 @@ return (
                                 step="0.1"
                                 min="0"
                                 placeholder="Example: 70.5"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all text-black"
                                 required
                             />
                         </div>
@@ -245,7 +249,7 @@ return (
                                 name="Height"
                                 min="0"
                                 placeholder="Example: 175"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all text-black"
                                 required
                             />
                         </div>
@@ -261,7 +265,7 @@ return (
                                 id="PasswordHash"
                                 name="PasswordHash"
                                 maxLength="16"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all pr-10"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F05050] focus:border-transparent transition-all pr-10 text-black"
                                 required
                             />
                             <button

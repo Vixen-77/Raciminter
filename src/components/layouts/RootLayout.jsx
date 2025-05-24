@@ -55,17 +55,10 @@ const RootLayout = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Toggle dark mode
-  const toggleDarkMode = () => {
-    setIsDark(!isDark)
-    
-    // Appliquer la classe 'dark' au document pour permettre aux autres composants de détecter le mode sombre
-    if (!isDark) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }
+const toggleDarkMode = () => {
+  // Optionnel : désactive le bouton (plus rien ne change)
+  console.log("Dark mode désactivé.");
+};
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 w-full mb-4">

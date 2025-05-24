@@ -7,7 +7,7 @@ const LoadingAnimation = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/'); // Redirige vers la page Home après 3 secondes
+      navigate('/fin'); // Redirige vers la page Home après 3 secondes
     }, 4000);
 
     return () => clearTimeout(timer); // Nettoyage si composant démonté

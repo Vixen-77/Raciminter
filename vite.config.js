@@ -12,7 +12,7 @@ export default defineConfig({
     },
   },
   server: {
-    host: '172.20.10.11', // autorise l'accès par IP locale
+    host: 'localhost', // autorise l'accès par IP locale
     port: 3000
   },
   });
