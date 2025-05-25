@@ -115,9 +115,9 @@ const ProS = () => {
       case "history":
         navigate("/HistPro")
         break
-      case "logout":
+      case "alerte":
         // Implement logout logic
-        console.log("Logging out...")
+        navigate("/alertep")
         break
       default:
         // Just update the active state for other items
@@ -717,6 +717,20 @@ const ProS = () => {
                 <span className="font-medium">Mes patients</span>
               </button>
             </li>
+
+            <li>
+             <button
+               onClick={() => handleNavClick("alerte")}
+               className={`w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 ${
+               activeItem === "alerte"
+                ? "bg-[#f05050] text-white shadow-md"
+                 : `${isDark ? "text-gray-300 hover:bg-gray-700" : "text-gray-700 hover:bg-gray-100"}`
+              }`}
+              >
+               <span className="mr-3 h-5 w-5">{renderIcon("activity")}</span>
+               <span className="font-medium">Alerte</span>
+               </button>
+              </li>
             <li>
               <button
                 onClick={() => handleNavClick("account")}
@@ -822,6 +836,19 @@ const ProS = () => {
                   >
                     <span className="mr-3 h-5 w-5">{renderIcon("users")}</span>
                     <span className="font-medium">Mes patients</span>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => handleNavClick("alerte")}
+                    className={`w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 ${
+                      activeItem === "account"
+                        ? "bg-[#f05050] text-white shadow-md"
+                        : `${isDark ? "text-gray-300 hover:bg-gray-700" : "text-gray-700 hover:bg-gray-100"}`
+                    }`}
+                  >
+                    <span className="mr-3 h-5 w-5">{renderIcon("activity")}</span>
+                    <span className="font-medium">Alerte</span>
                   </button>
                 </li>
                 <li>

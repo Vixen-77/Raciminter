@@ -22,13 +22,14 @@ import Help from "./pages/help";
 import ProS from "./pages/ProS";
 import RedirProS from "./pages/RedirPros";
 import Resp from "./pages/Resp";
-import Admin from "./pages/Admin";
 import Listproches from "./pages/ListProches";
 import HistPro from "./pages/HistPro";
 import HistPat from "./pages/HistPat";
 import AccountSettings from "./pages/AccountSettings";
 import Moderation from "./pages/Moderation";
+import Alerte from "./pages/Alert";
 import MedRec from "./pages/MedRec";
+import Alertep from "./pages/Alertp";
 import Fin from "./pages/fin"
 import Loading2 from "./pages/LoadingDoneinscription"
 import { DarkModeProvider } from "./components/layouts/DarkModeContext";
@@ -40,6 +41,10 @@ function App() {
         <Route path="/loading" element={<LoadingAnimation />} />
         <Route path="/fin" element={<Fin />} />  {/* ✅ TA PAGE "fin" SANS LAYOUT */}
         <Route path="/LoadingDoneinscription" element={<Loading2/>}/>
+        <Route path="/alerte" element={<Alerte />} /> {/* ✅ TA PAGE "alerte" SANS LAYOUT */}
+        <Route path="/alertep" element={<Alertep />} /> {/* ✅ TA PAGE "alertep" SANS LAYOUT */}
+        {/* Routes SANS RootLayout */}
+        <Route path="HistPat" element={<HistPat />} />
         {/* Routes AVEC RootLayout */}
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Home />} />
@@ -56,7 +61,6 @@ function App() {
           <Route path="ProS" element={<ProS />} />
           <Route path="Resp" element={<Resp />} />
           <Route path="RedirProS" element={<RedirProS />} />
-          <Route path="Admin" element={<Admin />} />
           <Route path="HistPro" element={<HistPro />} />
           <Route path="HistPat" element={<HistPat />} />
           <Route path="Listproches" element={<Listproches />} />

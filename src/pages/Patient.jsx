@@ -51,10 +51,10 @@ const Patient = () => {
             case 'medrec':
                 navigate('/MedRec');
                 break;
-           /* case 'logout':
+            case 'alerte':
                 // Implement logout logic
-                console.log('Logging out...');
-                break;*/
+                navigate('/alerte');
+                break;
             default:
                 // Just update the active state for other items
                 break;
@@ -260,7 +260,7 @@ const Patient = () => {
                         </li>
                         <li>
                             <button 
-                                onClick={() => handleNavClick('medrec')}
+                                onClick={()=> handleNavClick('medrec')}
                                 className={`w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 ${
                                     activeItem === 'activity' 
                                         ? 'bg-[#f05050] text-white shadow-md' 
@@ -271,7 +271,19 @@ const Patient = () => {
                                 <span className="font-medium">Medical Records</span>
                             </button>
                         </li>
-                      
+                        <li>                          
+                            <button 
+                                onClick={()=> handleNavClick('alerte')}
+                                className={`w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 ${
+                                    activeItem === 'activity' 
+                                        ? 'bg-[#f05050] text-white shadow-md' 
+                                        : `${isDark ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-700 hover:bg-gray-100'}`
+                                }`}
+                            >
+                                <span className="mr-3 h-5 w-5">{renderIcon('activity')}</span>
+                                <span className="font-medium">Alerte</span>
+                            </button>
+                        </li>
                         <li>
                             <button 
                                 onClick={() => handleNavClick('history')}

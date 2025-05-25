@@ -34,8 +34,8 @@ const HistPat = () => {
   // Liste des professionnels de santé
   const healthPros = [
     createHealthPro(
-      "Marie",
-      "Durand",
+      "Mezaoui",
+      "Damya",
       "+33 6 12 34 56 78",
       "dr.durand@clinique.fr",
       45,
@@ -43,8 +43,8 @@ const HistPat = () => {
       "",
     ),
     createHealthPro(
-      "Philippe",
-      "Laurent",
+      "Belabbas",
+      "Melinda",
       "+33 6 23 45 67 89",
       "dr.laurent@clinique.fr",
       52,
@@ -52,8 +52,8 @@ const HistPat = () => {
       "",
     ),
     createHealthPro(
-      "Isabelle",
-      "Moreau",
+      "Redjah",
+      "yousra sarah",
       "+33 6 34 56 78 90",
       "dr.moreau@clinique.fr",
       38,
@@ -61,8 +61,8 @@ const HistPat = () => {
       "",
     ),
     createHealthPro(
-      "Nicolas",
-      "Petit",
+      "Amrouche",
+      "Racim",
       "+33 6 45 67 89 01",
       "dr.petit@clinique.fr",
       41,
