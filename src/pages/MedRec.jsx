@@ -61,7 +61,7 @@ const MedRec = () => {
       },
     ]
 
-    setMedicalRecords(sampleRecords)
+    
 
     // Save to localStorage
     try {
@@ -207,7 +207,7 @@ const MedRec = () => {
   }
 
   // Confirm deletion
-  const confirmDelete = async () => {
+ /* const confirmDelete = async () => {
     if (recordToDelete === null) return
 
     try {
@@ -231,7 +231,58 @@ const MedRec = () => {
     } catch (error) {
       console.error("Erreur suppression:", error)
     }
+  }*/
+
+
+
+
+
+
+
+  // Remplace ta fonction confirmDelete par celle-ci :
+const confirmDelete = async () => {
+  if (recordToDelete === null) return;
+
+  try {
+    setDeleting(true);
+    
+    // Appelle la nouvelle fonction avec l'ID spécifique
+    await deleteSpecificRecord(recordToDelete);
+    
+  } catch (error) {
+    console.error("Erreur suppression:", error);
+  } finally {
+    setDeleting(false);
   }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Format date
   const formatDate = (dateString) => {
@@ -286,18 +337,246 @@ const MedRec = () => {
     formData.append("file", newRecord.file) // Fichier sélectionné
 
     try {
-      const response = await axios.post("http://192.168.1.5:5001/api/validationmail/PatientUploder", formData, {
+      const response = await axios.post("http://192.168.1.4:5001/api/validationmail/PatientUploder", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       console.log("Succès :", response.data)
       alert("Dossier envoyé avec succès !")
+      
+       const idfDossier = response.data.idfdossier;
+       if (idfDossier) {
+       localStorage.setItem("idDossier", idfDossier);
+       console.log("✅ idDossier enregistré :", idfDossier);
+
+       }
+
+
+
+      const newRecordData = {
+      id: response.data, // ✅ ID du serveur, pas Date.now() !
+      title: newRecord.title,
+      doctorEmail: newRecord.doctorEmail,
+      date: new Date().toISOString().split("T")[0],
+      status: "pending",
+      fileName: newRecord.file?.name,
+    }
+    const updatedRecords = [...medicalRecords, newRecordData]
+    setMedicalRecords(updatedRecords)
+    localStorage.setItem("medicalRecords", JSON.stringify(updatedRecords))
     } catch (error) {
       console.error("Erreur upload :", error.response?.data || error.message)
       alert("Échec de l'envoi du dossier.")
     }
   }
+   
+
+  
+   
+ 
+const handleDeleteMedRec = async () => {
+  try {
+    const storedUser = localStorage.getItem("user")
+    const idDossier = localStorage.getItem("idDossier") // <-- Récupère l'id du dossier à supprimer
+
+    if (!storedUser || !idDossier) {
+      console.error("Identifiants manquants (patient ou dossier).")
+      alert("Suppression impossible : identifiants manquants.")
+      return
+    }
+
+    const userData = JSON.parse(storedUser)
+
+    const formData = new FormData()
+    formData.append("patient", userData.result.uid)
+    formData.append("idDossier", )
+
+    const response = await axios.post("http://192.168.1.4:5001/api/validationmail/deleteListMedRec", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+
+    console.log("✅ Dossier supprimé avec succès :", response.data)
+    alert("Le dossier a été supprimé avec succès.")
+    
+    // Supprimer l'ID du localStorage (si utile)
+    localStorage.removeItem("idDossier")
+     
+    // (Optionnel) recharger la liste
+     setmedicalRecords(prev => prev.filter(p => p.id !== current.id));
+
+  } catch (error) {
+    if (error.response) {
+      console.error("❌ Erreur serveur :", error.response.data)
+      alert(`Erreur serveur : ${error.response.data.message || "inconnue"}`)
+    } else {
+      console.error("❌ Erreur réseau :", error.message)
+      alert("Erreur de connexion au serveur.")
+    }
+  }
+}
+
+ 
+
+
+  
+
+/*
+  const ALLsuppr = async () =>{
+   // localStorage.removeItem("medicalRecords");
+   // localStorage.removeItem("idDossier");
+   // setMedicalRecords([]);
+   
+   try {
+    const storedUser = localStorage.getItem("user");
+    const recordId= localStorage.getItem("idDossier")
+    if (!storedUser || !recordId) {
+      console.error("Identifiants manquants (utilisateur ou dossier).");
+      alert("Suppression impossible : identifiants manquants.");
+      return;
+    }
+
+    const userData = JSON.parse(storedUser);
+
+    const formData = new FormData();
+    formData.append("patient", userData.result.uid);
+    formData.append("idDossier", recordId); // Utilise recordId passé en paramètre
+
+    const response = await axios.post("http://192.168.1.4:5001/api/validationmail/deleteListMedRec", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log("✅ Dossier supprimé avec succès :", response.data);
+   // alert("Le dossier a été supprimé avec succès.");
+
+    // Supprimer l'élément du localStorage "medicalRecords"
+   // const storedRecords = JSON.parse(localStorage.getItem("medicalRecords")) || [];
+  //  const updatedRecords = storedRecords.filter((rec) => rec.id !== recordId);
+   // localStorage.setItem("medicalRecords", JSON.stringify(updatedRecords));
+
+    // Supprimer dans l'état React
+     setMedicalRecords((prev) => prev.filter((rec) => rec.id.toString() !== recordId));
+
+    // Nettoyage localStorage
+    localStorage.removeItem("idDossier");
+
+    // Supprimer l’ID temporaire si stocké
+    //localStorage.removeItem("idDossier");
+  } 
+
+
+  
+ catch (error) {
+    if (error.response) {
+      console.error("❌ Erreur serveur :", error.response.data);
+      alert(`Erreur serveur : ${error.response.data.message || "inconnue"}`);
+    } else {
+      console.error("❌ Erreur réseau :", error.message);
+      alert("Erreur de connexion au serveur.");
+    }
+  }
+ 
+
+
+};
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ const handleDeleteRecordBB = async () => {
+  // Confirmation avant suppression
+  if (!confirm("Êtes-vous sûr de vouloir supprimer ce dossier médical ? Cette action est irréversible.")) {
+    return;
+  }
+
+  try {
+    setDeleting(true);
+    
+    const storedUser = localStorage.getItem("user");
+    const storeIDdoc = localStorage.getItem("idDossier");
+    if (!storedUser || !storeIDdoc) {
+      console.error("Identifiants manquants (utilisateur ou dossier).");
+      alert("Suppression impossible : identifiants manquants.");
+      return;
+    }
+
+    console.log("Type de recordId:", typeof storeIDdoc);
+    console.log("Valeur de recordId:", storeIDdoc);
+    
+    const userData = JSON.parse(storedUser);
+    
+    const formData = new FormData();
+    formData.append("Patient", userData.result.uid);
+    formData.append("IdDossier",storeIDdoc);
+
+    const response = await axios.post("http://192.168.1.4:5001/api/validationmail/deleteListMedRec", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log("✅ Dossier supprimé avec succès :", response.data);
+
+    // Supprimer dans l'état React
+    setMedicalRecords((prev) => prev.filter((rec) => rec.id !== recordId));
+
+    // Mettre à jour le localStorage
+    const storedRecords = JSON.parse(localStorage.getItem("medicalRecords") || "[]");
+    const updatedRecords = storedRecords.filter((rec) => rec.id !== recordId);
+    localStorage.setItem("medicalRecords", JSON.stringify(updatedRecords));
+
+    alert("Le dossier a été supprimé avec succès.");
+
+  } catch (error) {
+    if (error.response) {
+      console.error("❌ Erreur serveur :", error.response.data);
+      alert(`Erreur serveur : ${error.response.data.message || "inconnue"}`);
+    } else {
+      console.error("❌ Erreur réseau :", error.message);
+      alert("Erreur de connexion au serveur.");
+    }
+  } finally {
+    setDeleting(false);
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+ 
+
+  
 
   //FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:
   //FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:
@@ -593,7 +872,7 @@ const MedRec = () => {
                   >
                     Annuler
                   </Button>
-                  <Button variant="destructive" onClick={confirmDelete} disabled={deleting}>
+                  <Button variant="destructive" onClick={handleDeleteRecordBB()} disabled={deleting}>
                     {deleting ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />

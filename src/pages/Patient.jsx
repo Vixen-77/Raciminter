@@ -79,7 +79,7 @@ const Patient = () => {
     formData.append("Role", 10); // "10" pour patient, "20" pour pro
 
     try {
-      const response = await axios.post("http://192.168.1.5:5001/api/auth/Logout", formData);
+      const response = await axios.post("http://192.168.1.4:5001/api/auth/Logout", formData);
       console.log(response.data); // "Déconnexion réussie."
 
       // Nettoyage local

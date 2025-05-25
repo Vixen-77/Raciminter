@@ -4,8 +4,11 @@ import { useState, useRef } from "react";
 import { signupPatient } from '../../services/auth';
 import { useNavigate } from 'react-router-dom';
 
+/* Removed duplicate default export PatientSignupDoucble */
+
+
 const PatientSignup = () => {
-    
+    const navigate = useNavigate(); // ✅ ICI c’est bon : dans le corps du composant
   const [showPassword, setShowPassword] = useState(false)
   const [previewImage, setPreviewImage] = useState(null)
   const fileInputRef = useRef(null)
@@ -53,26 +56,23 @@ const PatientSignup = () => {
     setage(agee);
     formData.append('Age',agee.toString());
     formData.append('Role', "10");
-     try{
-        
-        console.log(formData)
-    const response = await signupPatient(formData)
-    console.log(response);
-    navigate('/LoadingDoneinscription');
-   // alert('Succès', 'Inscription réussie ✅');
-    
+     
+    try {  
+      console.log(formData)
+      const response = await signupPatient(formData)
+      console.log(response);
+      navigate('/LoadingDoneinscription'); 
     } catch (error) {
-        alert('Erreur: Échec de l’inscription ❌');
-
+      console.error(error);
+      // Optionally, show an error message to the user here
     }
-    
-  };
-  
+   
+}
   
   const handleClick = () => {
     console.log('Composant monté !');
   };
-
+  
 
 
 
