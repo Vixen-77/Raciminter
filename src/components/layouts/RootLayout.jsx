@@ -143,6 +143,18 @@ const RootLayout = () => {
                     </span>
                     Contact
                   </button>
+                  
+
+
+
+
+
+
+
+
+
+
+
                 ) : (
                   <NavLink
                     to="/#footer"
@@ -174,6 +186,72 @@ const RootLayout = () => {
                   </NavLink>
                 )}
               </nav>
+              
+                
+                 
+             
+
+              <div className="absolute top-1 right-6 z-50">
+  <button
+    
+    className={`bg-white text-black px-6 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-gray-300 transition duration-300`}
+  >
+    Sign In / Sign Up
+  </button>
+</div>
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
               {/* Mobile Menu Button - Positioned absolutely on the right */}
               <button
@@ -350,6 +428,17 @@ const RootLayout = () => {
                 <button onClick={scrollToFooter} className="text-white/80 hover:text-white transition duration-300">
                   Contact
                 </button>
+
+                
+
+
+
+
+
+
+
+
+
               </nav>
 
               {/* Contact Information */}

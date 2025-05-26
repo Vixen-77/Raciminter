@@ -33,7 +33,7 @@ const Home = ({ isDarkMode }) => {
       <div
        className={`flex flex-col items-center w-full min-h-screen ${textColor} transition-all duration-300 ${showLoginPopup ? "blur-sm" : ""}`}
         style={{
-          backgroundImage: `url(${isDarkMode ? "/path-to-your-dark-mode-background.jpg" : "/CommeMobile.jpg"})`, // <-- MODIFICATION ICI
+          backgroundImage: `url(${isDarkMode ? "/path-to-your-dark-mode-background.jpg" : "/white-background-with-red-diagonal-lines_545823-19.avif"})`, // <-- MODIFICATION ICI
           backgroundSize: 'cover', // Pour que l'image couvre tout le fond
           backgroundPosition: 'center', // Pour centrer l'image
           backgroundAttachment: 'fixed', 
@@ -41,6 +41,10 @@ const Home = ({ isDarkMode }) => {
         }}
       >
         {/* Header Navigation */}
+         
+  
+      
+
 
         {/* Section principale avec titre et logo */}
         <main className="flex flex-col items-center justify-center flex-grow text-center px-4">
@@ -59,6 +63,8 @@ const Home = ({ isDarkMode }) => {
           >
             Sign Up
           </button>
+           {/* Bouton Sign Up modifié pour ouvrir le popup au lieu de naviguer */}
+         
 
           {/* Section "Who are we?" */}
           <section className="w-full max-w-4xl mb-16">
