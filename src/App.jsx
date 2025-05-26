@@ -31,6 +31,7 @@ import Alerte from "./pages/Alert";
 import MedRec from "./pages/MedRec";
 import Alertep from "./pages/Alertp";
 import Fin from "./pages/fin"
+import Features from "./pages/Features";
 import Loading2 from "./pages/LoadingDoneinscription"
 import { DarkModeProvider } from "./components/layouts/DarkModeContext";
 
@@ -48,6 +49,7 @@ function App() {
         {/* Routes AVEC RootLayout */}
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Home />} />
+          <Route path="features" element={<Features />} />
           <Route path="LoginSig" element={<LoginSig />} />
           <Route path="PatientSignup" element={<PatientSignup />} />
           <Route path="ProSignup" element={<ProSignup />} />
