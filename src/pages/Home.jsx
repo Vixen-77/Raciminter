@@ -48,9 +48,9 @@ const Home = ({ isDarkMode }) => {
           <div className="relative mb-6">
             <img src="/path-to-your-big-logo.svg" alt="E-mergency Icon" className="h-40 w-40 opacity-30" />
           </div>
-
+           
           {/* Titre principal */}
-          <h1 className=" text-4xl font-bold mb-10 tracking-wide ">JOIN E-MERGENCY NOW !</h1>
+          <h1 className="text-5xl font-bold mb-10 tracking-wide">JOIN E-MERGENCY NOW !</h1>
 
           {/* Bouton Sign Up modifié pour ouvrir le popup au lieu de naviguer */}
           <button
